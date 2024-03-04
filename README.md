@@ -31,6 +31,9 @@ Para executar a aplicação, rode o comando:
 
 mvn spring-boot:run
 
+## Contrato de APIs
+Este projeto utiliza a especificação OpenAPI para documentação e catálogo de APIs. Depois de executar a aplicação, é possível consultar todas as operações fornecidas pelo serviço e testá-las respectivamente acessando o endereço http://localhost:8080/api-insurance/swagger-ui/index.html#.
+
 ## Solução
 
 Para atender da melhor forma o pedido do desafio, utilizei de dois padrões de projeto, para facilitar a manutenção e diminuir a quantidade de regras e responsabilidades atribuídas na classe de serviço.
