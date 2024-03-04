@@ -5,26 +5,29 @@ import org.hibernate.validator.constraints.br.CPF;
 
 import javax.validation.constraints.*;
 
-import static br.com.insuranceapi.utils.ConstantsUtils.*;
+import static br.com.insuranceapi.utils.ConstantsUtils.NAME_MANDATORY;
+
 
 @Builder
 @Getter
 @AllArgsConstructor
+@NoArgsConstructor
 public class CustomerDTO {
 
-    @NotBlank(message = NAME_NOT_NULL)
+    @NotBlank(message = NAME_MANDATORY)
     private String name;
 
     @CPF
     private String cpf;
 
-    @NotNull(message = AGE_NOT_NULL)
-    @Min(value = 18, message = AGE_MIN)
-    private Integer age;
+    @Min(value = 18)
+    @Max(value = 100)
+    private int age;
 
+    @Pattern(regexp = "^.{2}$")
     private String location;
 
-    @NotBlank(message = PRICE_NOT_NULL)
-    @DecimalMin(value = MIN_PRICE, message = MIN_PRICE_MESSAGE)
+    @Min(value = 10000)
+    @Max(value = 1000000)
     private Double vehiclePrice;
 }

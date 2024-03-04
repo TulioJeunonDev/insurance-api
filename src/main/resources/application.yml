@@ -6,3 +6,7 @@ server:
 spring:
   main:
     banner-mode: 'console'
+
+app:
+  client:
+    ibgeUrl: ${url.client.ibgeUrl}

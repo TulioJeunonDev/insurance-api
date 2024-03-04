@@ -1,27 +1,43 @@
 package br.com.insuranceapi.service;
 
+import br.com.insuranceapi.client.IBGEApiClient;
 import br.com.insuranceapi.dto.CustomerDTO;
 import br.com.insuranceapi.dto.CustomerInsuranceDTO;
+import br.com.insuranceapi.dto.LocationDTO;
+import br.com.insuranceapi.dto.LocationDTOTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.test.util.ReflectionTestUtils;
+
+import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.when;
 
 public class CustomerInsuranceServiceTest {
 
     @InjectMocks
     CustomerInsuranceService customerInsuranceService;
 
+    @Mock
+    private IBGEApiClient ibgeApiClientTete;
+
+    @Mock LocationValidatorService locationValidatorService;
+
     @BeforeEach()
     void setUp(){
+
         MockitoAnnotations.openMocks(this);
     }
 
     @Test
-    void testFindByCustomerLowerPriceOnlyBasic(){
+    void testFindByCustomerLowerPriceOnlyBasic() throws Exception{
 
+        ReflectionTestUtils.setField(ibgeApiClientTete, "ibgeUrl", "test.com");
+        when(ibgeApiClientTete.getStates()).thenReturn(Arrays.asList(LocationDTO.builder().abbreviation("SP").build()));
         CustomerInsuranceDTO customerInsurance = customerInsuranceService.findInsuranceByCustomer(loadCustomer("SP", 35, 70000.0));
 
         assertEquals(1,customerInsurance.getInsurances().size());
@@ -30,7 +46,10 @@ public class CustomerInsuranceServiceTest {
     }
 
     @Test
-    void testFindByCustomerLowerPrice(){
+    void testFindByCustomerLowerPrice() throws Exception{
+
+        ReflectionTestUtils.setField(ibgeApiClientTete, "ibgeUrl", "test.com");
+        when(ibgeApiClientTete.getStates()).thenReturn(Arrays.asList(LocationDTO.builder().abbreviation("SP").build()));
 
         CustomerInsuranceDTO customerInsurance = customerInsuranceService.findInsuranceByCustomer(loadCustomer("SP", 20, 70000.0));
 
@@ -41,8 +60,10 @@ public class CustomerInsuranceServiceTest {
     }
 
     @Test
-    void testFindByCustomerMediumPrice(){
+    void testFindByCustomerMediumPrice() throws Exception{
 
+        ReflectionTestUtils.setField(ibgeApiClientTete, "ibgeUrl", "test.com");
+        when(ibgeApiClientTete.getStates()).thenReturn(Arrays.asList(LocationDTO.builder().abbreviation("SP").build()));
         CustomerInsuranceDTO customerInsurance = customerInsuranceService.findInsuranceByCustomer(loadCustomer("SP", 20, 80000.0));
 
         assertEquals(2,customerInsurance.getInsurances().size());
@@ -52,8 +73,10 @@ public class CustomerInsuranceServiceTest {
     }
 
     @Test
-    void testFindByCustomerMediumPriceOnlyBasic(){
+    void testFindByCustomerMediumPriceOnlyBasic() throws Exception{
 
+        ReflectionTestUtils.setField(ibgeApiClientTete, "ibgeUrl", "test.com");
+        when(ibgeApiClientTete.getStates()).thenReturn(Arrays.asList(LocationDTO.builder().abbreviation("SP").build()));
         CustomerInsuranceDTO customerInsurance = customerInsuranceService.findInsuranceByCustomer(loadCustomer("MG", 20, 80000.0));
 
         assertEquals(1,customerInsurance.getInsurances().size());
@@ -62,8 +85,10 @@ public class CustomerInsuranceServiceTest {
     }
 
     @Test
-    void testFindByCustomerHighPrice(){
+    void testFindByCustomerHighPrice() throws Exception{
 
+        ReflectionTestUtils.setField(ibgeApiClientTete, "ibgeUrl", "test.com");
+        when(ibgeApiClientTete.getStates()).thenReturn(Arrays.asList(LocationDTO.builder().abbreviation("SP").build()));
         CustomerInsuranceDTO customerInsurance = customerInsuranceService.findInsuranceByCustomer(loadCustomer("SP", 25, 100000.0));
 
         assertEquals(3,customerInsurance.getInsurances().size());
@@ -74,8 +99,10 @@ public class CustomerInsuranceServiceTest {
     }
 
     @Test
-    void testFindByCustomerHighPriceOnlyBasicAndHigh(){
+    void testFindByCustomerHighPriceOnlyBasicAndHigh() throws Exception{
 
+        ReflectionTestUtils.setField(ibgeApiClientTete, "ibgeUrl", "test.com");
+        when(ibgeApiClientTete.getStates()).thenReturn(Arrays.asList(LocationDTO.builder().abbreviation("SP").build()));
         CustomerInsuranceDTO customerInsurance = customerInsuranceService.findInsuranceByCustomer(loadCustomer("SP", 34, 100000.0));
 
         assertEquals(2,customerInsurance.getInsurances().size());

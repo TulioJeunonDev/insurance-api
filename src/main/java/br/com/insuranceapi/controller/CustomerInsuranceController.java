@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping(value = "/v1/insurance")
 public class CustomerInsuranceController {
@@ -18,7 +20,7 @@ public class CustomerInsuranceController {
     private CustomerInsuranceService customerInsuranceService;
 
     @PostMapping("/find")
-    public ResponseEntity<CustomerInsuranceDTO> findInsurancesByCustomer(@RequestBody CustomerDTO customerDTO){
+    public ResponseEntity<CustomerInsuranceDTO> findInsurancesByCustomer(@RequestBody @Valid CustomerDTO customerDTO){
         return ResponseEntity.ok().body(customerInsuranceService.findInsuranceByCustomer(customerDTO));
     }
 }
